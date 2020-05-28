@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Czas generowania: 27 Maj 2020, 22:24
+-- Czas generowania: 28 Maj 2020, 01:50
 -- Wersja serwera: 5.7.23
 -- Wersja PHP: 7.2.10
 
@@ -30,10 +30,11 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `autorzy`;
 CREATE TABLE IF NOT EXISTS `autorzy` (
-  `id_autor` int(11) NOT NULL,
+  `id_autor` int(11) NOT NULL AUTO_INCREMENT,
   `imie` text COLLATE utf8mb4_polish_ci NOT NULL,
-  `nazwisko` text COLLATE utf8mb4_polish_ci NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
+  `nazwisko` text COLLATE utf8mb4_polish_ci NOT NULL,
+  PRIMARY KEY (`id_autor`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
 -- Zrzut danych tabeli `autorzy`
@@ -44,8 +45,8 @@ INSERT INTO `autorzy` (`id_autor`, `imie`, `nazwisko`) VALUES
 (2, 'Adam', 'Mickiewicz'),
 (3, 'Henryk', 'Sienkiewicz'),
 (4, 'Eliza', 'Orzeszkowa'),
-(5, 'Remigiusz', 'Mróz'),
-(6, 'Aleksander', 'Kamiński'),
+(5, 'Remigiusz', 'Mroz'),
+(6, 'Aleksander', 'Kaminski'),
 (7, 'Jan', 'Brzechwa');
 
 -- --------------------------------------------------------
@@ -56,10 +57,13 @@ INSERT INTO `autorzy` (`id_autor`, `imie`, `nazwisko`) VALUES
 
 DROP TABLE IF EXISTS `connect`;
 CREATE TABLE IF NOT EXISTS `connect` (
-  `id_connect` int(11) NOT NULL,
+  `id_connect` int(11) NOT NULL AUTO_INCREMENT,
   `id_autor` int(11) NOT NULL,
-  `id_tytul` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
+  `id_tytul` int(11) NOT NULL,
+  PRIMARY KEY (`id_connect`),
+  KEY `autor` (`id_autor`),
+  KEY `tytul` (`id_tytul`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
 -- Zrzut danych tabeli `connect`
@@ -82,10 +86,11 @@ INSERT INTO `connect` (`id_connect`, `id_autor`, `id_tytul`) VALUES
 
 DROP TABLE IF EXISTS `tytuly`;
 CREATE TABLE IF NOT EXISTS `tytuly` (
-  `id_tytul` int(11) NOT NULL,
+  `id_tytul` int(11) NOT NULL AUTO_INCREMENT,
   `tytul` text COLLATE utf8mb4_polish_ci NOT NULL,
-  `isbn` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
+  `isbn` int(11) NOT NULL,
+  PRIMARY KEY (`id_tytul`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
 -- Zrzut danych tabeli `tytuly`
@@ -99,6 +104,17 @@ INSERT INTO `tytuly` (`id_tytul`, `tytul`, `isbn`) VALUES
 (5, 'Kasacja', 555),
 (6, 'Kamienie na szaniec', 666),
 (7, 'Akademia pana Kleksa', 777);
+
+--
+-- Ograniczenia dla zrzutów tabel
+--
+
+--
+-- Ograniczenia dla tabeli `connect`
+--
+ALTER TABLE `connect`
+  ADD CONSTRAINT `autorzy` FOREIGN KEY (`id_autor`) REFERENCES `autorzy` (`id_autor`),
+  ADD CONSTRAINT `tytuly` FOREIGN KEY (`id_tytul`) REFERENCES `tytuly` (`id_tytul`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
