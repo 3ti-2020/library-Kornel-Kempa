@@ -15,7 +15,7 @@
     <input type="text" name="nazwisko">
     <p>Tytul</p>
     <input type="text" name="tytul"> <br>
-    <input type="submit" value="DODAJ"> 
+    <input type="submit" value="Dodaj"> 
     </form>
         
         

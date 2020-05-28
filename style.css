@@ -1,0 +1,19 @@
+* {
+    margin: 0;
+    padding: 0;
+  }
+
+  .container {
+    background: wheat;
+    height: 100vh;
+    width: 100vw;
+    display:flex;
+    justify-content: space-around;
+    align-items:center;
+  }
+  .tabela, td, th{
+    border: 1px solid white;
+    font-size: 20px;
+    margin: 5px;
+    padding: 5px;
+}
